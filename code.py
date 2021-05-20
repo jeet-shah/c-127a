@@ -8,7 +8,7 @@ starturl = "https://en.wikipedia.org/wiki/List_of_brightest_stars_and_other_reco
 page = requests.get(starturl)
 def scrape():
     headers = ["Proper name","Distance","Mass","Radius"]
-    soup = bs(page,'html.parser')
+    soup = bs(page.text,'html.parser')
     startable = soup.find('table')
     temp_list = []
     tablerows = startable.find_all("tr")
@@ -16,7 +16,7 @@ def scrape():
         td = tr.find_all("td")
         row = [i.text.rstrip()for i in td]
         temp_list.append(row)
-    star_name,star_distance,star_mass,star_radius = []
+    star_name,star_distance,star_mass,star_radius = [],[],[],[]
     for i in range(1,len(temp_list)):
         star_name.append(temp_list[i][1])
         star_distance.append(temp_list[i][3])
